@@ -17,12 +17,14 @@ const formattedTime = computed(() => {
 </script>
 
 <template>
-  <div class="w-full flex flex-col border-#d8dee4 border-solid rounded-10px px-20px py-12px">
-    <a
-      :href="repoData.url"
-      class="text-#0969da text-20px leading-30px font-600 no-underline cursor-pointer hover:underline"
-      >{{ repoData.name }}</a
-    >
+  <div class="flex flex-col border-#d8dee4 border-solid rounded-10px px-20px py-12px">
+    <div>
+      <a
+        :href="repoData.url"
+        class="text-#0969da text-20px leading-30px font-600 no-underline cursor-pointer hover:underline"
+        >{{ repoData.name }}</a
+      >
+    </div>
     <div class="text-#656d76 text-14px leading-21px mb-5px">
       {{ repoData.description }}
     </div>
