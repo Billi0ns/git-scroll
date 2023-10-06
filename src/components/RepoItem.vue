@@ -17,7 +17,7 @@ const formattedTime = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col border-#d8dee4 border-solid rounded-10px px-20px py-12px">
+  <div class="flex flex-col border-#d8dee4 border-solid border-1.5px rounded-10px px-20px py-12px">
     <div>
       <a
         :href="repoData.url"
