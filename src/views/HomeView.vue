@@ -2,8 +2,10 @@
 import { onMounted, ref } from 'vue';
 import { Octokit } from 'octokit';
 import TheHeader from '@/components/TheHeader.vue';
+import TheLoading from '@/components/TheLoading.vue';
 import RepoItem from '@/components/RepoItem.vue';
 
+const isLoading = ref(true);
 const repoUser = 'yyx990803'; // Evan You
 const repoData = ref<RepoData[]>([]);
 
@@ -56,5 +58,7 @@ onMounted(async () => {
     <div class="container grid px-10 py-5 mx-auto gap-20px" md="grid-cols-2">
       <RepoItem v-for="item in repoData" :key="item.id" :repo-data="item" />
     </div>
+
+    <TheLoading v-show="isLoading" />
   </main>
 </template>
