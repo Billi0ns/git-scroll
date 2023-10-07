@@ -5,11 +5,22 @@ import TheHeader from '@/components/TheHeader.vue';
 import TheLoading from '@/components/TheLoading.vue';
 import RepoItem from '@/components/RepoItem.vue';
 
+export interface RepoData {
+  id: number;
+  name: string;
+  description: string | null;
+  url: string | undefined;
+  stargazers_count: number | undefined;
+  updated_at: string | null | undefined;
+}
+
 const loadingEl = ref<InstanceType<typeof TheLoading> | null>(null);
 const isLoading = ref(false);
+const isInited = ref(false);
 const isRepoFullyLoaded = computed(
   () => repoData.value.length >= repoAmount.value && isInited.value,
 );
+const shouldShowLoading = computed(() => !isRepoFullyLoaded.value && isInited.value);
 
 const REPO_USER = 'yyx990803'; // Evan You
 const repoAmount = ref(0);
@@ -30,15 +41,6 @@ const getRepoAmount = async () => {
     console.error('There was a problem fetching user data:', error);
   }
 };
-
-export interface RepoData {
-  id: number;
-  name: string;
-  description: string | null;
-  url: string | undefined;
-  stargazers_count: number | undefined;
-  updated_at: string | null | undefined;
-}
 
 const getRepoData = async (amount: number, page: number) => {
   try {
@@ -71,7 +73,6 @@ const getRepoData = async (amount: number, page: number) => {
 let observer: IntersectionObserver;
 const FIRST_FETCH_SIZE = 30;
 const SUBSEQUENT_FETCH_SIZE = 10;
-const isInited = ref(false);
 const startPage = ref(Math.floor(FIRST_FETCH_SIZE / SUBSEQUENT_FETCH_SIZE) + 1);
 
 const fetchInitialData = async () => {
@@ -91,12 +92,9 @@ const disconnectObserverIfLoaded = () => {
 };
 
 const handleIntersect = async () => {
-  if (!isInited.value) {
-    await fetchInitialData();
-  } else {
-    await fetchAdditionalData();
-  }
+  if (isLoading.value) return;
 
+  await fetchAdditionalData();
   disconnectObserverIfLoaded();
 };
 
@@ -110,12 +108,10 @@ const createIntersectionObserver = (target: HTMLElement) => {
   const callback = (entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        if (isLoading.value) return;
         handleIntersect();
       }
     });
   };
-
   observer = new IntersectionObserver(callback, options);
   observer.observe(target);
 };
@@ -125,6 +121,7 @@ onMounted(async () => {
 
   await getRepoAmount();
   createIntersectionObserver(loadingEl.value.el);
+  fetchInitialData();
 });
 
 onUnmounted(() => {
@@ -137,9 +134,12 @@ onUnmounted(() => {
     <TheHeader />
 
     <div class="container grid px-10 py-5 mx-auto gap-20px" md="grid-cols-2">
+      <template v-if="!repoData.length">
+        <RepoItem v-for="item in 30" :key="item" />
+      </template>
       <RepoItem v-for="item in repoData" :key="item.id" :repo-data="item" />
     </div>
 
-    <TheLoading ref="loadingEl" v-show="!isRepoFullyLoaded" />
+    <TheLoading ref="loadingEl" v-show="shouldShowLoading" />
   </main>
 </template>
