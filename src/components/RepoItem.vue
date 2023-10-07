@@ -11,8 +11,11 @@ const props = defineProps({
   },
 });
 
-const formattedTime = computed(() => {
-  return props.repoData.updated_at?.split('T')[0];
+const formattedDate = computed(() => {
+  if (!props.repoData.updated_at) return '';
+
+  const date = new Date(props.repoData.updated_at);
+  return date.toLocaleDateString('zh-Hant');
 });
 </script>
 
@@ -34,7 +37,7 @@ const formattedTime = computed(() => {
           <IconStar class="mr-3px" />
           <span class="mr-10px">{{ repoData.stargazers_count }}</span>
         </div>
-        <div>Updated on {{ formattedTime }}</div>
+        <div v-if="formattedDate">Updated on {{ formattedDate }}</div>
       </div>
     </template>
 
