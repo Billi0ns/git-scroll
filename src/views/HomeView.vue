@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { Octokit } from '@octokit/core';
+import { request } from '@octokit/request';
 import TheHeader from '@/components/TheHeader.vue';
 import TheLoading from '@/components/TheLoading.vue';
 import RepoItem from '@/components/RepoItem.vue';
@@ -26,17 +26,19 @@ const isRepoFullyLoaded = computed(
 );
 const shouldShowLoading = computed(() => !isRepoFullyLoaded.value && isInited.value);
 
-const REPO_USER = 'yyx990803'; // Evan You
-const repoAmount = ref(0);
-const repoData = ref<RepoData[]>([]);
-
-const octokit = new Octokit({
-  auth: import.meta.env.VITE_GITHUB_TOKEN,
+const authToken = computed(() => {
+  if (!import.meta.env.VITE_GITHUB_TOKEN) return '';
+  return `token ${import.meta.env.VITE_GITHUB_TOKEN}`;
+});
+const requestWithAuth = request.defaults({
+  headers: {
+    authorization: authToken.value,
+  },
 });
 
 const getRepoAmount = async () => {
   try {
-    const response = await octokit.request('GET /users/{username}', {
+    const response = await requestWithAuth('GET /users/{username}', {
       username: REPO_USER,
     });
     const { data } = response;
@@ -50,7 +52,7 @@ const getRepoAmount = async () => {
 const getRepoData = async (amount: number, page: number) => {
   try {
     isLoading.value = true;
-    const response = await octokit.request('GET /users/{username}/repos', {
+    const response = await requestWithAuth('GET /users/{username}/repos', {
       username: REPO_USER,
       per_page: amount,
       page,
