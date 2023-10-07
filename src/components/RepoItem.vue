@@ -20,16 +20,17 @@ const formattedDate = computed(() => {
 </script>
 
 <template>
-  <div
-    class="flex flex-col border-$light-gray border-solid border-1.5px rounded-10px px-20px py-12px"
-  >
+  <div flex="~ col" border="$light-gray solid 1.5px" rounded="10px" p="x-20px y-12px">
     <template v-if="props.repoData.name">
       <div>
         <a
           :href="repoData.url"
-          class="text-$blue text-20px leading-30px font-600 no-underline cursor-pointer hover:underline"
-          >{{ repoData.name }}</a
+          class="text-$blue text-20px leading-30px no-underline hover:underline"
+          font="600"
+          cursor="pointer"
         >
+          {{ repoData.name }}
+        </a>
       </div>
       <div class="text-$dark-gray text-14px leading-21px mb-5px">
         {{ repoData.description }}

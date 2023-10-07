@@ -9,7 +9,13 @@ const toggleDark = useToggle(isDark);
 </script>
 <template>
   <header
-    class="fixed top-0 left-0 w-full bg-$header-bg py-16px px-24px shadow-lg flex justify-center items-center z-10"
+    w="full"
+    p="x-24px y-16px"
+    position="fixed top-0 left-0"
+    flex="~ justify-center items-center"
+    bg="$header-bg"
+    shadow="lg"
+    z="10"
   >
     <div class="container flex items-center justify-between">
       <h1 class="text-xl text-$header-text font-bold">Evan You's Repos</h1>
