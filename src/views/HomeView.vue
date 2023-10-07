@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { Octokit } from 'octokit';
+import { Octokit } from '@octokit/core';
 import TheHeader from '@/components/TheHeader.vue';
 import TheLoading from '@/components/TheLoading.vue';
 import RepoItem from '@/components/RepoItem.vue';
