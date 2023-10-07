@@ -1,5 +1,5 @@
 :root,
-html[data-scheme='light'] {
+html.light {
   --body-bg: #ffffff;
 
   --light-gray: #d8dee4;
@@ -10,7 +10,7 @@ html[data-scheme='light'] {
   --header-text: #1f2328;
 }
 
-html[data-scheme='dark'] {
+html.dark {
   --body-bg: #0d1116;
 
   --light-gray: #21262d;
