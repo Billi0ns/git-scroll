@@ -17,6 +17,10 @@ export interface RepoData {
 const loadingEl = ref<InstanceType<typeof TheLoading> | null>(null);
 const isLoading = ref(false);
 const isInited = ref(false);
+
+const REPO_USER = 'yyx990803'; // Evan You
+const repoAmount = ref(0);
+const repoData = ref<RepoData[]>([]);
 const isRepoFullyLoaded = computed(
   () => repoData.value.length >= repoAmount.value && isInited.value,
 );
@@ -38,6 +42,7 @@ const getRepoAmount = async () => {
     const { data } = response;
     repoAmount.value = data.public_repos;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('There was a problem fetching user data:', error);
   }
 };
@@ -65,6 +70,7 @@ const getRepoData = async (amount: number, page: number) => {
     repoData.value.push(...newData);
     isLoading.value = false;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('There was a problem fetching repo data:', error);
     isLoading.value = false;
   }
