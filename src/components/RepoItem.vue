@@ -20,20 +20,22 @@ const formattedDate = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col border-#d8dee4 border-solid border-1.5px rounded-10px px-20px py-12px">
+  <div
+    class="flex flex-col border-$light-gray border-solid border-1.5px rounded-10px px-20px py-12px"
+  >
     <template v-if="props.repoData.name">
       <div>
         <a
           :href="repoData.url"
-          class="text-#0969da text-20px leading-30px font-600 no-underline cursor-pointer hover:underline"
+          class="text-$blue text-20px leading-30px font-600 no-underline cursor-pointer hover:underline"
           >{{ repoData.name }}</a
         >
       </div>
-      <div class="text-#656d76 text-14px leading-21px mb-5px">
+      <div class="text-$dark-gray text-14px leading-21px mb-5px">
         {{ repoData.description }}
       </div>
-      <div class="flex items-center text-#656d76 text-12px leading-18px mt-auto">
-        <div class="flex items-center cursor-pointer hover:text-#0969da">
+      <div class="flex items-center text-$dark-gray text-12px leading-18px mt-auto">
+        <div class="flex items-center cursor-pointer hover:text-$blue">
           <IconStar class="mr-3px" />
           <span class="mr-10px">{{ repoData.stargazers_count }}</span>
         </div>
@@ -42,9 +44,9 @@ const formattedDate = computed(() => {
     </template>
 
     <template v-else>
-      <div class="h-20px w-1/2 bg-gray-200 rounded animate-pulse mb-14px"></div>
-      <div class="h-16px w-3/4 bg-gray-200 rounded animate-pulse mb-8px"></div>
-      <div class="h-16px w-1/2 bg-gray-200 rounded animate-pulse"></div>
+      <div class="h-20px w-1/2 bg-$light-gray rounded animate-pulse mb-14px"></div>
+      <div class="h-16px w-3/4 bg-$light-gray rounded animate-pulse mb-8px"></div>
+      <div class="h-16px w-1/2 bg-$light-gray rounded animate-pulse"></div>
     </template>
   </div>
 </template>

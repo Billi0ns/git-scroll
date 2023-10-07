@@ -5,10 +5,10 @@
       w="45px"
       h="45px"
       rounded="1/2"
-      border="8px solid #e5e7eb"
-      border-t="8px solid #0969da"
+      border="8px solid $light-gray"
+      border-t="8px solid $blue"
     ></div>
-    <div class="mt-10px text-18px font-bold text-gray-700">Loading...</div>
+    <div class="mt-10px text-18px font-bold text-$dark-gray">Loading...</div>
   </div>
 </template>
 
